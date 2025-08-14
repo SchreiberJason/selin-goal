@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firat Derins BMW 420D & Karriereziele</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #13283D, #000000);
+            background-attachment: fixed;
+        }
+        /* Definiere die neuen Farben für die Verwendung in Tailwind */
+        .bg-secondary { background-color: #2A959E; }
+        .bg-accent-green { background-color: #B6FF9B; }
+        .bg-accent-red { background-color: #FF9B9B; }
+        .text-primary-dark { color: #13283D; }
+
+        /* CSS für den Kreis-Fortschrittsbalken */
+        .progress-circle {
+            transform: rotate(-90deg);
+        }
+        .progress-circle .bg-circle {
+            fill: none;
+            stroke: #333;
+            stroke-width: 10;
+        }
+        .progress-circle .progress-arc {
+            fill: none;
+            stroke: #B6FF9B;
+            stroke-width: 10;
+            transition: stroke-dashoffset 0.7s ease-out;
+            stroke-linecap: round;
+        }
+        
+        /* Neues Design für die Karrierestufen */
+        .tier-card {
+            background-color: #1a324a;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(182, 255, 155, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tier-card.active {
+            border: 2px solid #B6FF9B;
+        }
+        .tier-card.active::before {
+            opacity: 1;
+        }
+
+        /* Neue Styles für die Mitarbeiter-Slots */
+        .employee-slot {
+            width: 20px;
+            height: 20px;
+            background-color: #4a5568; /* Grauer Hintergrund für leere Slots */
+            border-radius: 50%;
+            transition: background-color 0.3s ease-out;
+            border: 1px solid #718096;
+        }
+        .employee-slot.filled {
+            background-color: #B6FF9B; /* Grüner Hintergrund für gefüllte Slots */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-white">
+
+    <!-- Hauptbereich mit Autoziel und allgemeinen Daten -->
+    <div class="flex flex-col md:flex-row w-full flex-grow">
+        <!-- Linke Spalte: Bild und Fortschrittsbalken -->
+        <div class="flex-[1.8] flex flex-col p-8 md:p-12">
+            <div class="mb-8 md:mb-12">
+                <h1 class="text-3xl sm:text-4xl font-bold text-white">Hallo Selin,</h1>
+                <p class="text-xl sm:text-2xl text-gray-300 mt-2">Dein Volkswaagen Polo wartet auf dich! Bleib dran!</p>
+            </div>
+    
+            <!-- Dieser Container hält das Bild und den Fortschrittsbalken und wurde um 25% nach oben verschoben -->
+            <div style="margin-top: 5%;">
+                <!-- Bild des Ziel-Autos -->
+                <div class="mb-8 md:mb-0 flex-grow flex items-center justify-center">
+                    <img src="VW-Polo.png.avif" alt="Bild eines BMW 420D" class="w-full h-auto object-contain">
+                </div>
+        
+                <!-- Fortschrittsbalken unter dem Bild -->
+                <div class="mt-8 text-center flex flex-col items-center">
+                    <!-- Die Breite des Fortschrittsbalkens wurde auf 75% gesetzt und um 5% nach links verschoben -->
+                    <div class="w-3/4 h-8 bg-gray-700 rounded-full overflow-hidden shadow-inner" style="margin-left: -10%; margin-top: -0%;">
+                        <div id="progress-bar" class="bg-accent-green h-8 rounded-full transition-all duration-700 ease-out" style="width: 0%;"></div>
+                    </div>
+                    <!-- Die Fortschrittsanzeige befindet sich jetzt unterhalb des Balkens und hat das neue Format -->
+                    <p id="progress-text" class="text-xl font-bold text-gray-300 mt-2" style="margin-left: -10%;">0 / 7650</p>
+                </div>
+            </div>
+        </div>
+
+    
+        <!-- Rechte Spalte: Haupt-Daten -->
+        <div class="flex-1 text-white p-8 md:p-12 flex flex-col justify-center rounded-t-2xl md:rounded-l-none md:rounded-r-2xl shadow-xl" style="margin-left: -15%;">
+            <div class="max-w-md w-full mx-auto">
+                
+                <h2 class="text-2xl font-semibold text-white mb-6">Wichtige Daten</h2>
+
+                <!-- Ziel-Details -->
+                <div class="space-y-4 mb-8">
+                    <div class="bg-gray-800 bg-opacity-50 rounded-xl p-4">
+                        <p class="text-gray-300 text-lg">Ziel: <span class="font-bold text-white">10.000 €</span></p>
+                        <p class="text-gray-300 text-lg">Ziel-Datum: <span class="font-bold text-white">1. Juni 2026</span></p>
+                    </div>
+                </div>
+
+                <!-- Countdown-Timer -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-semibold text-white mb-2">Verbleibende Zeit</h2>
+                    <div id="countdown" class="bg-secondary text-white text-3xl font-bold rounded-xl p-4 shadow-md">
+                        <!-- Der Countdown wird hier durch JavaScript aktualisiert -->
+                    </div>
+                </div>
+
+                <!-- Einheiten-Anzeige -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-semibold text-white mb-4">Erfolg</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div class="bg-accent-green rounded-xl p-4">
+                            <p class="text-sm font-medium text-gray-900">Bereits erreicht (EH)</p>
+                            <p id="current-eh-display" class="text-3xl font-bold mt-1 text-gray-900">0</p>
+                        </div>
+                        <div class="bg-accent-red rounded-xl p-4">
+                            <p class="text-sm font-medium text-gray-900">Noch benötigt (EH)</p>
+                            <p id="remaining-eh-display" class="text-3xl font-bold mt-1 text-gray-900">6000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visuelle Trennlinie zwischen den Abschnitten -->
+    <div class="w-full flex justify-center py-8">
+        <div class="w-3/4 h-1 bg-gray-700 rounded-full shadow-lg"></div>
+    </div>
+
+    <!-- Neuer, nahtloser Bereich für Karriereziele -->
+    <div class="p-8 md:p-12 w-full flex-shrink-0">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-semibold text-white mb-6 text-center">Dein Karrierefortschritt</h2>
+            
+            <!-- Die Karrierestufen als visuellere Blöcke -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <!-- T1-Karte -->
+                <div id="tier-1-card" class="tier-card active">
+                    <h3 class="text-3xl font-bold mb-2">T1</h3>
+                    <p class="text-sm text-gray-400 mb-4">0 EH</p>
+                    <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                        <div id="tier-1-progress" class="h-full bg-accent-green transition-all duration-700 ease-out" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <!-- T2-Karte -->
+                <div id="tier-2-card" class="tier-card">
+                    <h3 class="text-3xl font-bold mb-2">T2</h3>
+                    <p class="text-sm text-gray-400 mb-4">1250 EH</p>
+                    <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                        <div id="tier-2-progress" class="h-full bg-accent-green transition-all duration-700 ease-out" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <!-- T3-Karte -->
+                <div id="tier-3-card" class="tier-card">
+                    <h3 class="text-3xl font-bold mb-2">T3</h3>
+                    <p class="text-sm text-gray-400 mb-4">2500 EH</p>
+                    <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                        <div id="tier-3-progress" class="h-full bg-accent-green transition-all duration-700 ease-out" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <!-- Junior GST-Karte -->
+                <div id="tier-gst-card" class="tier-card">
+                    <h3 class="text-3xl font-bold mb-2">Junior GST</h3>
+                    <p class="text-sm text-gray-400 mb-4">4000 EH</p>
+                    <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                        <div id="tier-gst-progress" class="h-full bg-accent-green transition-all duration-700 ease-out" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bereich für Kreisdiagramm und detaillierte Infos -->
+            <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <!-- Kreisdiagramm (links), jetzt deutlich größer -->
+                <div class="flex-grow md:flex-[2] relative w-full h-auto max-w-96 max-h-96">
+                    <svg class="progress-circle w-full h-full" viewBox="0 0 100 100">
+                        <!-- Hintergrund-Kreis -->
+                        <circle class="bg-circle" cx="50" cy="50" r="40"></circle>
+                        <!-- Fortschritts-Kreis -->
+                        <circle class="progress-arc" cx="50" cy="50" r="40" id="progress-circle-career"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center flex-col text-center">
+                        <p id="career-progress-percentage" class="text-6xl font-bold text-white">0%</p>
+                        <p class="text-sm text-gray-400 mt-1">Fortschritt</p>
+                    </div>
+                </div>
+
+                <!-- Detaillierte Infos (rechts) als 2x2 Matrix -->
+                <div class="flex-grow md:flex-[1] grid grid-cols-2 gap-4 w-full md:w-auto">
+                    <div class="p-4 bg-gray-700 rounded-lg shadow-inner flex flex-col items-center justify-center text-center">
+                        <p class="text-xs text-gray-300 font-bold">Aktueller Stand</p>
+                        <p class="text-2xl font-bold text-white mt-1"><span id="current-eh-display-career">1627</span> EH</p>
+                    </div>
+                    <div class="p-4 bg-gray-700 rounded-lg shadow-inner flex flex-col items-center justify-center text-center">
+                        <p class="text-xs text-gray-300 font-bold">Mitarbeiter</p>
+                        <p class="text-2xl font-bold text-white mt-1"><span id="employee-count-career">2</span></p>
+                        <!-- Neue visuelle Anzeige für Mitarbeiterfortschritt: Slots -->
+                        <div id="employee-slots-container" class="flex space-x-2 mt-2">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-gray-700 rounded-lg shadow-inner flex flex-col items-center justify-center text-center">
+                        <p id="chancenseminar-status" class="text-gray-300 text-sm font-bold">Chancenseminar: <span class="text-red-400">noch nicht qualifiziert</span></p>
+                    </div>
+                    <div class="p-4 bg-gray-700 rounded-lg shadow-inner flex flex-col items-center justify-center text-center">
+                        <p id="gst-status" class="text-gray-300 text-sm font-bold">GST: <span class="text-red-400">noch nicht qualifiziert</span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Neue Sektion für die Junior GST-Zieldatumsberechnung -->
+    <div class="p-8 md:p-12 w-full flex-shrink-0">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-md">
+                <h3 class="text-2xl font-bold text-white mb-4">Prognose Junior GST</h3>
+                <p class="text-lg text-gray-300">
+                    Wenn du mit dem Tempo weiterarbeitest, das du für dein Auto benötigst,
+                    wirst du Junior GST am <span id="gst-target-date" class="font-bold text-accent-green"></span>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visuelle Trennlinie zwischen den Abschnitten -->
+    <div class="w-full flex justify-center py-8">
+        <div class="w-3/4 h-1 bg-gray-700 rounded-full shadow-lg"></div>
+    </div>
+    
+    <!-- Sektion: Berechnung der Termine -->
+    <div class="p-8 md:p-12 w-full flex-shrink-0">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-semibold text-white mb-6">Wie viele Termine brauchst du?</h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Basierend auf deinen Zielen und dem verbleibenden Zeitraum.
+                <br>
+                <span class="text-sm text-gray-400 italic">(100 EH pro Termin)</span>
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Sektion für das Auto-Ziel -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-md">
+                    <h3 class="text-2xl font-bold text-white mb-4">Für dein Auto</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-700 rounded-lg p-4 text-center shadow-inner">
+                            <p class="text-xs text-gray-300 font-medium">Termine / Monat</p>
+                            <p id="monthly-car-appts" class="text-3xl font-bold text-accent-green mt-1">0</p>
+                        </div>
+                        <div class="bg-gray-700 rounded-lg p-4 text-center shadow-inner">
+                            <p class="text-xs text-gray-300 font-medium">Termine / Woche</p>
+                            <p id="weekly-car-appts" class="text-3xl font-bold text-accent-green mt-1">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sektion für die ET-Berechnung (ersetzt den alten GST-Block) -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-md">
+                    <h3 class="text-2xl font-bold text-white mb-4">Für Geschäftsstellenleiter</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-700 rounded-lg p-4 text-center shadow-inner">
+                            <p class="text-xs text-gray-300 font-medium">ETs / Monat</p>
+                            <p id="monthly-ets" class="text-3xl font-bold text-accent-green mt-1">0</p>
+                        </div>
+                        <div class="bg-gray-700 rounded-lg p-4 text-center shadow-inner">
+                            <p class="text-xs text-gray-300 font-medium">ETs / Woche</p>
+                            <p id="weekly-ets" class="text-3xl font-bold text-accent-green mt-1">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- KONFIGURATION FÜR FIRAT DERIN ---
+        // Passe diese Werte an, um deinen aktuellen Fortschritt zu aktualisieren
+        const zielbetrag = 10000; // in Euro
+        const zielDatum = new Date('2026-06-01T00:00:00'); // Das Datum deines Autoziels
+
+        // Dein aktueller Status
+        const aktuelleEH = 297;
+        const mitarbeiterAnzahl = 0;
+
+        // --- BERECHNUNGEN (Keine Anpassung erforderlich) ---
+        // Ziele
+        const carGoalEH = 5000;
+        const tier1EH = 1250;
+        const tier2EH = 2500;
+        const tier3EH = 4000;
+        const gstEH = 4000; // Junior GST Einheiten-Ziel
+        const mitarbeiterZiel = 3; // Junior GST Mitarbeiter-Ziel
+
+        // Dom-Elemente
+        const countdownElement = document.getElementById('countdown');
+        const fortschrittBalkenAuto = document.getElementById('progress-bar');
+        const fortschrittTextAuto = document.getElementById('progress-text');
+        const aktuelleEHAnzeige = document.getElementById('current-eh-display');
+        const restEHAnzeige = document.getElementById('remaining-eh-display');
+        const fortschrittKreisKarriere = document.getElementById('progress-circle-career');
+        const chancenseminarStatus = document.getElementById('chancenseminar-status');
+        const gstStatus = document.getElementById('gst-status');
+        const currentEhDisplayCareer = document.getElementById('current-eh-display-career');
+        const employeeCountCareer = document.getElementById('employee-count-career');
+        const careerProgressPercentage = document.getElementById('career-progress-percentage');
+        
+        // Tier-Elemente
+        const tier1Card = document.getElementById('tier-1-card');
+        const tier2Card = document.getElementById('tier-2-card');
+        const tier3Card = document.getElementById('tier-3-card');
+        const tierGstCard = document.getElementById('tier-gst-card');
+        const tier1Progress = document.getElementById('tier-1-progress');
+        const tier2Progress = document.getElementById('tier-2-progress');
+        const tier3Progress = document.getElementById('tier-3-progress');
+        const tierGstProgress = document.getElementById('tier-gst-progress');
+
+        // Mitarbeiter-Slots
+        const employeeSlotsContainer = document.getElementById('employee-slots-container');
+
+        // Elemente für die Terminberechnung
+        const monthlyCarAppts = document.getElementById('monthly-car-appts');
+        const weeklyCarAppts = document.getElementById('weekly-car-appts');
+        
+        // Neues Element für die GST-Prognose
+        const gstTargetDateElement = document.getElementById('gst-target-date');
+        
+        // Elemente für die ET-Berechnung
+        const monthlyEts = document.getElementById('monthly-ets');
+        const weeklyEts = document.getElementById('weekly-ets');
+        const requiredEmployees = document.getElementById('required-employees');
+
+        // Countdown-Logik
+        function updateCountdown() {
+            const jetzt = new Date();
+            const verbleibendeZeit = zielDatum - jetzt;
+
+            if (verbleibendeZeit < 0) {
+                countdownElement.textContent = "Ziel erreicht!";
+                if (fortschrittBalkenAuto) fortschrittBalkenAuto.style.width = '100%';
+                if (fortschrittTextAuto) fortschrittTextAuto.textContent = `${aktuelleEH} / ${carGoalEH}`;
+                return;
+            }
+
+            const tage = Math.floor(verbleibendeZeit / (1000 * 60 * 60 * 24));
+            const stunden = Math.floor((verbleibendeZeit % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60));
+            const sekunden = Math.floor((verbleibendeZeit % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${tage} Tage, ${stunden} Stunden, ${minuten} Minuten, ${sekunden} Sekunden`;
+        }
+
+        // Starte den Countdown
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Sofort aktualisieren, um ein Flackern zu vermeiden
+
+        // Fortschrittsanzeige aktualisieren
+        function updateProgress() {
+            // Auto-Ziel
+            const fortschrittProzentAuto = (aktuelleEH / carGoalEH) * 100;
+            if (fortschrittBalkenAuto) fortschrittBalkenAuto.style.width = `${Math.min(fortschrittProzentAuto, 100)}%`;
+            if (fortschrittTextAuto) fortschrittTextAuto.textContent = `${aktuelleEH} / ${carGoalEH}`;
+            aktuelleEHAnzeige.textContent = aktuelleEH;
+            const nochBenötigteEH = carGoalEH - aktuelleEH;
+            restEHAnzeige.textContent = nochBenötigteEH > 0 ? nochBenötigteEH : 0;
+            
+            // Karriereziele
+            currentEhDisplayCareer.textContent = aktuelleEH;
+            employeeCountCareer.textContent = mitarbeiterAnzahl;
+
+            const gesamtFortschrittKarriere = (aktuelleEH / gstEH) * 100;
+            careerProgressPercentage.textContent = `${Math.min(gesamtFortschrittKarriere, 100).toFixed(1)}%`;
+
+            // Tier-Fortschritte
+            if (aktuelleEH >= tier1EH) {
+                tier1Progress.style.width = '100%';
+                tier1Card.classList.add('active');
+            } else {
+                const tier1Fortschritt = (aktuelleEH / tier1EH) * 100;
+                tier1Progress.style.width = `${Math.min(tier1Fortschritt, 100)}%`;
+                tier1Card.classList.add('active');
+            }
+
+            if (aktuelleEH >= tier2EH) {
+                tier2Progress.style.width = '100%';
+                tier2Card.classList.add('active');
+            } else if (aktuelleEH > tier1EH) {
+                const tier2Fortschritt = ((aktuelleEH - tier1EH) / (tier2EH - tier1EH)) * 100;
+                tier2Progress.style.width = `${Math.min(tier2Fortschritt, 100)}%`;
+                tier2Card.classList.add('active');
+            } else {
+                tier2Progress.style.width = '0%';
+                tier2Card.classList.remove('active');
+            }
+
+            if (aktuelleEH >= tier3EH) {
+                tier3Progress.style.width = '100%';
+                tier3Card.classList.add('active');
+            } else if (aktuelleEH > tier2EH) {
+                const tier3Fortschritt = ((aktuelleEH - tier2EH) / (tier3EH - tier2EH)) * 100;
+                tier3Progress.style.width = `${Math.min(tier3Fortschritt, 100)}%`;
+                tier3Card.classList.add('active');
+            } else {
+                tier3Progress.style.width = '0%';
+                tier3Card.classList.remove('active');
+            }
+            
+            if (aktuelleEH >= gstEH) {
+                tierGstProgress.style.width = '100%';
+                tierGstCard.classList.add('active');
+            } else {
+                tierGstProgress.style.width = '0%';
+                tierGstCard.classList.remove('active');
+            }
+
+
+            // Kreisdiagramm aktualisieren
+            const radius = 40;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference * (1 - Math.min(gesamtFortschrittKarriere, 100) / 100);
+            fortschrittKreisKarriere.style.strokeDasharray = circumference;
+            fortschrittKreisKarriere.style.strokeDashoffset = offset;
+
+            // Mitarbeiter-Slots dynamisch erstellen
+            if (employeeSlotsContainer) {
+                employeeSlotsContainer.innerHTML = ''; // Vorherige Slots entfernen
+                // Berücksichtigt das mitarbeiterZiel für die Anzahl der Kreise
+                for (let i = 0; i < mitarbeiterZiel; i++) {
+                    const slotDiv = document.createElement('div');
+                    slotDiv.classList.add('employee-slot', 'w-4', 'h-4', 'sm:w-5', 'sm:h-5'); // Angepasste Größe
+                    if (i < mitarbeiterAnzahl) {
+                        slotDiv.classList.add('filled');
+                    }
+                    employeeSlotsContainer.appendChild(slotDiv);
+                }
+            }
+
+
+            // Status für Chancenseminar und GST
+            if (mitarbeiterAnzahl >= 3 && aktuelleEH >= 2500) {
+                chancenseminarStatus.innerHTML = `Chancenseminar: <span class="text-green-400">✔ Qualifiziert!</span>`;
+            } else {
+                chancenseminarStatus.innerHTML = `Chancenseminar: <span class="text-red-400">noch nicht qualifiziert</span>`;
+            }
+
+            if (mitarbeiterAnzahl >= mitarbeiterZiel && aktuelleEH >= gstEH) {
+                gstStatus.innerHTML = `Junior GST: <span class="text-green-400">✔ Qualifiziert!</span>`;
+            } else {
+                gstStatus.innerHTML = `Junior GST: <span class="text-red-400">noch nicht qualifiziert</span>`;
+            }
+        }
+        
+        // Berechnung der Terminzahlen und des GST-Datums
+        function updateAllCalculations() {
+            const jetzt = new Date();
+            const verbleibendeZeitMs = zielDatum - jetzt;
+            const verbleibendeTage = verbleibendeZeitMs / (1000 * 60 * 60 * 24);
+
+            // Termine für Auto-Ziel
+            const fehlendeEhAuto = Math.max(0, carGoalEH - aktuelleEH);
+            const benoetigteTermineAuto = fehlendeEhAuto / 100;
+            const termineProMonatAuto = benoetigteTermineAuto / (verbleibendeTage / 30.44);
+            const termineProWocheAuto = benoetigteTermineAuto / (verbleibendeTage / 7);
+
+            // Berechnung des Junior GST-Zieldatums basierend auf Auto-Pace
+            const fehlendeEhGstPrognose = Math.max(0, gstEH - aktuelleEH);
+            const ehProTag = (carGoalEH - aktuelleEH) / verbleibendeTage;
+            const tageBisGst = fehlendeEhGstPrognose / ehProTag;
+            const gstPrognoseDatum = new Date(jetzt.getTime() + tageBisGst * (1000 * 60 * 60 * 24));
+            
+            // Datum formatieren
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = gstPrognoseDatum.toLocaleDateString('de-DE', options);
+
+            // ET-Berechnung
+            const fehlendeMitarbeiter = Math.max(0, mitarbeiterZiel - mitarbeiterAnzahl);
+            const benoetigteEts = fehlendeMitarbeiter * 10;
+            const etsProMonat = benoetigteEts / (verbleibendeTage / 30.44);
+            const etsProWoche = benoetigteEts / (verbleibendeTage / 7);
+
+            // Werte auf der Seite anzeigen
+            if (monthlyCarAppts) monthlyCarAppts.textContent = termineProMonatAuto.toFixed(1);
+            if (weeklyCarAppts) weeklyCarAppts.textContent = termineProWocheAuto.toFixed(1);
+            
+            if (gstTargetDateElement) gstTargetDateElement.textContent = formattedDate;
+
+            if (monthlyEts) monthlyEts.textContent = etsProMonat.toFixed(1);
+            if (weeklyEts) weeklyEts.textContent = etsProWoche.toFixed(1);
+            if (requiredEmployees) requiredEmployees.textContent = mitarbeiterZiel;
+            
+        }
+
+        // Starte alle Aktualisierungen
+        updateProgress();
+        updateAllCalculations();
+
+    </script>
+</body>
+</html>
