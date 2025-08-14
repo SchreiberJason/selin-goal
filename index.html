@@ -84,50 +84,48 @@
 </head>
 <body class="flex flex-col min-h-screen text-white">
 
-    <!-- Hauptbereich mit Autoziel und allgemeinen Daten -->
-    <div class="flex flex-col md:flex-row w-full flex-grow">
-        <!-- Linke Spalte: Bild und Fortschrittsbalken -->
-        <div class="flex-[1.8] flex flex-col p-8 md:p-12">
-            <div class="mb-8 md:mb-12">
-                <h1 class="text-3xl sm:text-4xl font-bold text-white">Hallo Selin,</h1>
-                <p class="text-xl sm:text-2xl text-gray-300 mt-2">Dein Volkswaagen Polo wartet auf dich! Bleib dran!</p>
-            </div>
-    
-            <!-- Dieser Container hält das Bild und den Fortschrittsbalken und wurde um 25% nach oben verschoben -->
-            <div style="margin-top: 5%;">
-                <!-- Bild des Ziel-Autos -->
-                <div class="mb-8 md:mb-0 flex-grow flex items-center justify-center">
-                    <img src="VW-Polo.png.avif" alt="Bild eines BMW 420D" class="w-full h-auto object-contain">
-                </div>
-        
-                <!-- Fortschrittsbalken unter dem Bild -->
-                <div class="mt-8 text-center flex flex-col items-center">
-                    <!-- Die Breite des Fortschrittsbalkens wurde auf 75% gesetzt und um 5% nach links verschoben -->
-                    <div class="w-3/4 h-8 bg-gray-700 rounded-full overflow-hidden shadow-inner" style="margin-left: -10%; margin-top: -0%;">
-                        <div id="progress-bar" class="bg-accent-green h-8 rounded-full transition-all duration-700 ease-out" style="width: 0%;"></div>
-                    </div>
-                    <!-- Die Fortschrittsanzeige befindet sich jetzt unterhalb des Balkens und hat das neue Format -->
-                    <p id="progress-text" class="text-xl font-bold text-gray-300 mt-2" style="margin-left: -10%;">0 / 7650</p>
-                </div>
-            </div>
+<!-- Begrüßungsbereich -->
+<section class="w-full p-4 md:p-8 text-left">
+    <h1 class="text-3xl sm:text-4xl font-bold text-white">Hallo Selin,</h1>
+    <p class="text-xl sm:text-2xl text-gray-300 mt-2">Dein Volkswagen Polo wartet auf dich! Bleib dran!</p>
+</section>
+
+<!-- Hauptbereich mit Auto und Daten -->
+<section class="flex flex-col md:flex-row w-full max-w-[1540px] mx-auto flex-grow items-center md:items-start gap-4 p-4 md:p-8">
+
+    <!-- Linke Spalte: Auto + Fortschrittsbalken -->
+    <div class="flex-[3] min-w-[65%] flex flex-col items-center relative -mt-[-5%]"> <!-- Auto insgesamt 5% nach oben -->
+        <!-- Bild -->
+        <div class="w-full flex justify-center">
+            <img src="VW-Polo.png.avif" alt="Bild eines BMW 420D" 
+                 class="w-full max-w-[115%] h-auto object-contain -translate-y-[5%]"> <!-- Auto nochmal 5% nach oben -->
         </div>
 
-    
-        <!-- Rechte Spalte: Haupt-Daten -->
-        <div class="flex-1 text-white p-8 md:p-12 flex flex-col justify-center rounded-t-2xl md:rounded-l-none md:rounded-r-2xl shadow-xl" style="margin-left: -15%;">
-            <div class="max-w-md w-full mx-auto">
-                
-                <h2 class="text-2xl font-semibold text-white mb-6">Wichtige Daten</h2>
+        <!-- Fortschrittsbalken zentriert unter dem Bild, auf Notebook verschoben -->
+        <div class="mt-2 w-full flex justify-center flex-col items-center 
+                md:justify-start md:items-start md:translate-x-[18%] md:-translate-y-[0%]">
+            <div class="w-full max-w-2xl h-8 bg-gray-700 rounded-full overflow-hidden shadow-inner">
+                <div id="progress-bar" class="bg-accent-green h-8 rounded-full transition-all duration-700 ease-out" style="width: 0%;"></div>
+            </div>
+            <p id="progress-text" class="text-xl font-bold text-gray-300 mt-2">0 / 7650</p>
+        </div>
+    </div>
 
-                <!-- Ziel-Details -->
-                <div class="space-y-4 mb-8">
-                    <div class="bg-gray-800 bg-opacity-50 rounded-xl p-4">
-                        <p class="text-gray-300 text-lg">Ziel: <span class="font-bold text-white">10.000 €</span></p>
-                        <p class="text-gray-300 text-lg">Ziel-Datum: <span class="font-bold text-white">1. Juni 2026</span></p>
-                    </div>
+    <!-- Rechte Spalte: Wichtige Daten weiter nach rechts -->
+    <div class="flex-[1] min-w-[300px] pl-[5%] text-white p-4 md:p-0 flex flex-col justify-center items-center md:items-start">
+        <div class="max-w-md w-full mx-auto">
+            
+            <h2 class="text-2xl font-semibold text-white mb-6">Wichtige Daten</h2>
+
+            <!-- Ziel-Details -->
+            <div class="space-y-4 mb-8">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-4">
+                    <p class="text-gray-300 text-lg">Ziel: <span class="font-bold text-white">10.000 €</span></p>
+                    <p class="text-gray-300 text-lg">Ziel-Datum: <span class="font-bold text-white">1. Juni 2026</span></p>
                 </div>
+            </div>
 
-                <!-- Countdown-Timer -->
+            <!-- Countdown-Timer -->
                 <div class="mb-8">
                     <h2 class="text-2xl font-semibold text-white mb-2">Verbleibende Zeit</h2>
                     <div id="countdown" class="bg-secondary text-white text-3xl font-bold rounded-xl p-4 shadow-md">
@@ -152,7 +150,8 @@
             </div>
         </div>
     </div>
-    
+</section>
+
     <!-- Visuelle Trennlinie zwischen den Abschnitten -->
     <div class="w-full flex justify-center py-8">
         <div class="w-3/4 h-1 bg-gray-700 rounded-full shadow-lg"></div>
